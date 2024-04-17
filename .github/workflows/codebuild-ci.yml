@@ -4,8 +4,8 @@ on:
   release:
     types: [ published ]
   pull_request:
-    branches:
-      - main
+    types: [ opened, synchronize, reopened, labeled, unlabeled ]
+    branches: [ main ]
   workflow_dispatch:
     inputs:
       aws-sdk-kotlin-pr:
@@ -158,7 +158,8 @@ jobs:
             
             await github.graphql(writeComment)
 
-      - name: Evaluate Result # TODO: ADD LOGIC FOR LABEL THAT MAKES US IGNORE THIS (SEE: https://github.com/awslabs/aws-sdk-kotlin/blob/main/.github/workflows/api-compat-verification.yml)
+      - name: Evaluate Result
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'acknowledge-artifact-size-increase') }}
         run: |
           cat has-significant-change.txt | grep true
           if [ $? = 0 ]; then 
