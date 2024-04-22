@@ -1,5 +1,63 @@
 # Changelog
 
+## [1.1.23] - 04/22/2024
+
+### Features
+* (**bedrockagent**) Releasing the support for simplified configuration and return of control
+* (**bedrockagentruntime**) Releasing the support for simplified configuration and return of control
+* (**paymentcryptography**) Adding support to TR-31/TR-34 exports for optional headers, allowing customers to add additional metadata (such as key version and KSN) when exporting keys from the service.
+* (**route53profiles**) Route 53 Profiles allows you to apply a central DNS configuration across many VPCs regardless of account.
+* (**sagemaker**) This release adds support for Real-Time Collaboration and Shared Space for JupyterLab App on SageMaker Studio.
+* (**transfer**) Adding new API to support remote directory listing using SFTP connector
+
+### Fixes
+* [#900](https://github.com/awslabs/aws-sdk-kotlin/issues/900) Correctly generate presigners, waiters, and paginators for resource operations
+
+### Documentation
+* (**redshiftserverless**) Updates description of schedule field for scheduled actions.
+* (**servicediscovery**) This release adds examples to several Cloud Map actions.
+
+## [1.1.22] - 04/19/2024
+
+### Features
+* (**glue**) Adding RowFilter in the response for GetUnfilteredTableMetadata API
+* (**internetmonitor**) This update introduces the GetInternetEvent and ListInternetEvents APIs, which provide access to internet events displayed on the Amazon CloudWatch Internet Weather Map.
+* (**personalize**) This releases auto training capability while creating a solution and automatically syncing latest solution versions when creating/updating a campaign
+* Customize S3's `Expires` field, including adding a new `ExpiresString` field for output types.
+
+### Fixes
+* [#1210](https://github.com/awslabs/aws-sdk-kotlin/issues/1210) Service client based identity providers now respect AWS_ENDPOINT_URL_SERVICE environment variables
+
+## [1.1.21] - 04/18/2024
+
+### Features
+* (**drs**) Outpost ARN added to Source Server and Recovery Instance
+* (**emrserverless**) This release adds the capability to publish detailed Spark engine metrics to Amazon Managed Service for Prometheus (AMP) for  enhanced monitoring for Spark jobs.
+* (**guardduty**) Added IPv6Address fields for local and remote IP addresses
+* (**quicksight**) This release adds support for the Cross Sheet Filter and Control features, and support for warnings in asset imports for any permitted errors encountered during execution
+* (**rolesanywhere**) This release introduces the PutAttributeMapping and DeleteAttributeMapping APIs. IAM Roles Anywhere now provides the capability to define a set of mapping rules, allowing customers to specify which data is extracted from their X.509 end-entity certificates.
+* (**sagemaker**) Removed deprecated enum values and updated API documentation.
+* (**workspaces**) Adds new APIs for managing and sharing WorkSpaces BYOL configuration across accounts.
+
+## [1.1.20] - 04/17/2024
+
+### Features
+* (**ec2**) Documentation updates for Elastic Compute Cloud (EC2).
+* (**qbusiness**) This release adds support for IAM Identity Center (IDC) as the identity gateway for Q Business. It also allows users to provide an explicit intent for Q Business to identify how the Chat request should be handled.
+
+## [1.1.19] - 04/16/2024
+
+### Features
+* (**bedrockagent**) For Create Agent API, the agentResourceRoleArn parameter is no longer required.
+* (**emrserverless**) This release adds support for shuffle optimized disks that allow larger disk sizes and higher IOPS to efficiently run shuffle heavy workloads.
+* (**entityresolution**) Cross Account Resource Support .
+* (**iotwireless**) Add PublicGateways in the GetWirelessStatistics call response, indicating the LoRaWAN public network accessed by the device.
+* (**lakeformation**) This release adds Lake Formation managed RAM support for the 4 APIs - "DescribeLakeFormationIdentityCenterConfiguration", "CreateLakeFormationIdentityCenterConfiguration", "DescribeLakeFormationIdentityCenterConfiguration", and "DeleteLakeFormationIdentityCenterConfiguration"
+* (**m2**) Adding new ListBatchJobRestartPoints API and support for restart batch job.
+* (**mediapackagev2**) Dash v2 is a MediaPackage V2 feature to support egressing on DASH manifest format.
+* (**outposts**) This release adds new APIs to allow customers to configure their Outpost capacity at order-time.
+* (**wellarchitected**) AWS Well-Architected now has a Connector for Jira to allow customers to efficiently track workload risks and improvement efforts and create closed-loop mechanisms.
+
 ## [1.1.18] - 04/12/2024
 
 ### Features
