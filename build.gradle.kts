@@ -25,6 +25,13 @@ plugins {
     id("artifact-size-metrics") version "0.4.2" // TODO: Use lib.versions.toml
 }
 
+artifactSizeMetrics {
+    artifactPrefixes = setOf(":services", ":aws-runtime")
+    closurePrefixes = setOf(":services")
+    significantChangeThresholdPercentage = 5.0
+    projectRepositoryName = "aws-sdk-kotlin"
+}
+
 val testJavaVersion = typedProp<String>("test.java.version")?.let {
     JavaLanguageVersion.of(it)
 }?.also {
