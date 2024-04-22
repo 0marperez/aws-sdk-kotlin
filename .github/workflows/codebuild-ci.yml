@@ -37,7 +37,7 @@ concurrency:
 
 jobs:
   e2e-tests:
-    if: ${{ github.event_name }} == 'pull_request' || ${{ github.event_name }} == 'workflow_dispatch'
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Verify PRs are not running malicious code
@@ -67,7 +67,7 @@ jobs:
           fi
 
   service-check-batch-and-artifact-size-metrics:
-    if: ${{ github.event_name }} == 'pull_request' || ${{ github.event_name }} == 'workflow_dispatch'
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Verify PRs are not running malicious code
@@ -116,7 +116,7 @@ jobs:
                 repository(owner:"${context.repo.owner}", name:"${context.repo.repo}"){
                   pullRequest(number: ${context.issue.number}) {
                     id
-                    comments(last:200) {
+                    comments(last:100) {
                       nodes {
                         id
                         body
@@ -134,7 +134,7 @@ jobs:
             const comments = response.repository.pullRequest.comments.nodes
 
             for (const i in comments) {
-              if (comments[i].author.login == 'github-actions' && !comments[i].isMinimized && comments[i].body.startsWith('Affected Artifacts') {
+              if (comments[i].author.login == 'github-actions' && !comments[i].isMinimized && comments[i].body.startsWith('Affected Artifacts')) {
                 const hideComment = 
                   `mutation { 
                     minimizeComment(input:{subjectId:"${comments[i].id}", classifier:OUTDATED}){
@@ -161,14 +161,14 @@ jobs:
       - name: Evaluate Result
         if: ${{ !contains(github.event.pull_request.labels.*.name, 'acknowledge-artifact-size-increase') }}
         run: |
-          cat has-significant-change.txt | grep true
-          if [ $? = 0 ]; then 
+          cd build/reports/metrics
+          cat has-significant-change.txt | grep false || {
             echo An artifact increased in size by more than allowed or a new artifact was created.
             exit 1
-          fi
+          }
 
   release-artifact-size-metrics:
-    if: ${{ github.event_name }} == 'release'
+    if: github.event_name == 'release'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
