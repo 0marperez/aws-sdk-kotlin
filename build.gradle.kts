@@ -22,6 +22,7 @@ plugins {
     // ensure the correct version of KGP ends up on our buildscript classpath
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.jvm) apply false
+    id("artifact-size-metrics") version "0.4.2" // TODO: Use lib.versions.toml
 }
 
 val testJavaVersion = typedProp<String>("test.java.version")?.let {
