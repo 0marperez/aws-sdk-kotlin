@@ -106,7 +106,7 @@ jobs:
       - name: Collect Artifact Size Metrics
         run: ./gradlew collectDelegatedArtifactSizeMetrics -PpullRequest=${{ github.event.number }}
       - name: Analyze Artifact Size Metrics
-        run: ./gradlew analyzeArtifactMetrics
+        run: ./gradlew analyzeArtifactSizeMetrics
       - name: Show Results
         uses: actions/github-script@v7
         with:
