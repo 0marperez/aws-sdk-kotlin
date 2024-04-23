@@ -147,7 +147,7 @@ jobs:
             }
 
             const fs = require('node:fs')
-            const comment = fs.readFileSync('./build/reports/metrics/artifact-analysis.csv', 'utf8')
+            const comment = fs.readFileSync('build/reports/metrics/artifact-analysis.md', 'utf8')
 
             const writeComment = 
               `mutation {
