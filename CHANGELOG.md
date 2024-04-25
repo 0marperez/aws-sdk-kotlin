@@ -1,5 +1,42 @@
 # Changelog
 
+## [1.1.26] - 04/25/2024
+
+### Features
+* (**appsync**) UpdateGraphQLAPI documentation update and datasource introspection secret arn update
+* (**fms**) AWS Firewall Manager adds support for network ACL policies to manage Amazon Virtual Private Cloud (VPC) network access control lists (ACLs) for accounts in your organization.
+* (**ivs**) Bug Fix: IVS does not support arns with the `svs` prefix
+* (**ivsrealtime**) Bug Fix: IVS Real Time does not support ARNs using the `svs` prefix.
+* (**sfn**) Add new ValidateStateMachineDefinition operation, which performs syntax checking on the definition of a Amazon States Language (ASL) state machine.
+
+### Documentation
+* (**rds**) Updates Amazon RDS documentation for setting local time zones for RDS for Db2 DB instances.
+
+## [1.1.25] - 04/24/2024
+
+### Features
+* (**datasync**) This change allows users to disable and enable the schedules associated with their tasks.
+* (**ec2**) Launching capability for customers to enable or disable automatic assignment of public IPv4 addresses to their network interface
+* (**emrcontainers**) EMRonEKS Service support for SecurityConfiguration enforcement for Spark Jobs.
+* (**entityresolution**) Support Batch Unique IDs Deletion.
+* (**gamelift**) Amazon GameLift releases container fleets support for public preview. Deploy Linux-based containerized game server software for hosting on Amazon GameLift.
+* (**ssm**) Add SSM DescribeInstanceProperties API to public AWS SDK.
+
+## [1.1.24] - 04/23/2024
+
+### Features
+* (**bedrock**) This release introduces Model Evaluation and Guardrails for Amazon Bedrock.
+* (**bedrockagent**) Introducing the ability to create multiple data sources per knowledge base, specify S3 buckets as data sources from external accounts, and exposing levers to define the deletion behavior of the underlying vector store data.
+* (**bedrockagentruntime**) This release introduces zero-setup file upload support for the RetrieveAndGenerate API. This allows you to chat with your data without setting up a Knowledge Base.
+* (**bedrockruntime**) This release introduces Guardrails for Amazon Bedrock.
+* (**costexplorer**) Added additional metadata that might be applicable to your reservation recommendations.
+* (**ec2**) This release introduces EC2 AMI Deregistration Protection, a new AMI property that can be enabled by customers to protect an AMI against an unintended deregistration. This release also enables the AMI owners to view the AMI 'LastLaunchedTime' in DescribeImages API.
+* (**workspacesweb**) Added InstanceType and MaxConcurrentSessions parameters on CreatePortal and UpdatePortal Operations as well as the ability to read Customer Managed Key & Additional Encryption Context parameters on supported resources (Portal, BrowserSettings, UserSettings, IPAccessSettings)
+
+### Documentation
+* (**pi**) Clarifies how aggregation works for GetResourceMetrics in the Performance Insights API.
+* (**rds**) Fix the example ARN for ModifyActivityStreamRequest
+
 ## [1.1.23] - 04/22/2024
 
 ### Features
