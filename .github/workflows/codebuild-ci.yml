@@ -87,18 +87,18 @@ jobs:
         id: svc-check-batch
         run: | 
           REPOSITORY=$(echo ${{ github.repository }} | cut -d '/' -f 2)
-          PULL_REQUEST=``
-          INTERNAL=`${{ github.event.number }}`
-          EXTERNAL=`${{ inputs.aws-sdk-kotlin-pr }}`
+          PULL_REQUEST=""
+          INTERNAL=${{ github.event.number }}
+          EXTERNAL=${{ inputs.aws-sdk-kotlin-pr }}
           
-          if [ -n "$INTERNAL" ]; then
+          if [ ! -z "$INTERNAL" ]; then
             PULL_REQUEST=${{ github.event.number }}
-            echo Identified this an internal pull request: $PULL_REQUEST
-          elif [ -n "$EXTERNAL" ]; then
+            echo "Identified this an internal pull request build: $PULL_REQUEST"
+          elif [ ! -z "$EXTERNAL" ]; then
             PULL_REQUEST=${{ inputs.aws-sdk-kotlin-pr }}
-            echo Identified this as an external pull request build: $PULL_REQUEST
+            echo "Identified this as an external pull request build: $PULL_REQUEST"
           else 
-            echo Couldn't identify this as an internal or external pull request
+            echo "Couldn't identify this as an internal or external pull request"
             exit 1
           fi
           
@@ -120,18 +120,18 @@ jobs:
           fi
       - name: Collect Artifact Size Metrics
         run: |
-          PULL_REQUEST=``
-          INTERNAL=`${{ github.event.number }}`
-          EXTERNAL=`${{ inputs.aws-sdk-kotlin-pr }}`
+          PULL_REQUEST=""
+          INTERNAL=${{ github.event.number }}
+          EXTERNAL=${{ inputs.aws-sdk-kotlin-pr }}
           
-          if [ -n "$INTERNAL" ]; then
+          if [ ! -z "$INTERNAL" ]; then
             PULL_REQUEST=${{ github.event.number }}
-            echo Identified this an internal pull request: $PULL_REQUEST
-          elif [ -n "$EXTERNAL" ]; then
+            echo "Identified this an internal pull request build: $PULL_REQUEST"
+          elif [ ! -z "$EXTERNAL" ]; then
             PULL_REQUEST=${{ inputs.aws-sdk-kotlin-pr }}
-            echo Identified this as an external pull request build: $PULL_REQUEST
+            echo "Identified this as an external pull request build: $PULL_REQUEST"
           else 
-            echo Couldn't identify this as an internal or external pull request
+            echo "Couldn't identify this as an internal or external pull request"
             exit 1
           fi
           
