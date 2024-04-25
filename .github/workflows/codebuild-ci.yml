@@ -89,7 +89,7 @@ jobs:
           REPOSITORY=$(echo ${{ github.repository }} | cut -d '/' -f 2)
           PULL_REQUEST=""
           INTERNAL=${{ github.event.number }}
-          EXTERNAL=${{ inputs.aws-sdk-kotlin-pr }}
+          #EXTERNAL=${{ inputs.aws-sdk-kotlin-pr }}
           
           if [ -n "$INTERNAL" ]; then
             PULL_REQUEST=${{ github.event.number }}
@@ -122,7 +122,7 @@ jobs:
         run: |
           PULL_REQUEST=""
           INTERNAL=${{ github.event.number }}
-          EXTERNAL=${{ inputs.aws-sdk-kotlin-pr }}
+          #EXTERNAL=${{ inputs.aws-sdk-kotlin-pr }}
           
           if [ -n "$INTERNAL" ]; then
             PULL_REQUEST=${{ github.event.number }}
