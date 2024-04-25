@@ -99,12 +99,12 @@ jobs:
           echo starting if
           if [ ! -z "$INTERNAL" ]; then
             PULL_REQUEST=${{ github.event.number }}
-            echo Identified this an internal pull request: $PULL_REQUEST
+            echo "Identified this an internal pull request: $PULL_REQUEST"
           elif [ ! -z "$EXTERNAL" ]; then
             PULL_REQUEST=${{ inputs.aws-sdk-kotlin-pr }}
-            echo Identified this as an external pull request build: $PULL_REQUEST
+            echo "Identified this as an external pull request build: $PULL_REQUEST"
           else 
-            echo Couldn't identify this as an internal or external pull request
+            echo "Couldn't identify this as an internal or external pull request"
             exit 1
           fi
           echo done with if
