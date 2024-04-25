@@ -88,8 +88,8 @@ jobs:
         run: | 
           REPOSITORY=$(echo ${{ github.repository }} | cut -d '/' -f 2)
           PULL_REQUEST=""
-          INTERNAL=$(${{ github.event.number }})
-          EXTERNAL=$(${{ inputs.aws-sdk-kotlin-pr }})
+          INTERNAL=${{ github.event.number }}
+          EXTERNAL=${{ inputs.aws-sdk-kotlin-pr }}
           
           if [ -n "$INTERNAL" ]; then
             PULL_REQUEST=${{ github.event.number }}
@@ -121,8 +121,8 @@ jobs:
       - name: Collect Artifact Size Metrics
         run: |
           PULL_REQUEST=""
-          INTERNAL=$(${{ github.event.number }})
-          EXTERNAL=$(${{ inputs.aws-sdk-kotlin-pr }})
+          INTERNAL=${{ github.event.number }}
+          EXTERNAL=${{ inputs.aws-sdk-kotlin-pr }}
           
           if [ -n "$INTERNAL" ]; then
             PULL_REQUEST=${{ github.event.number }}
