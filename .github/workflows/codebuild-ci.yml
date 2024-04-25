@@ -97,10 +97,10 @@ jobs:
           echo external
           
           echo starting if
-          if [ -n "$INTERNAL" ]; then
+          if [ ! -z "$INTERNAL" ]; then
             PULL_REQUEST=${{ github.event.number }}
             echo Identified this an internal pull request: $PULL_REQUEST
-          elif [ -n "$EXTERNAL" ]; then
+          elif [ ! -z "$EXTERNAL" ]; then
             PULL_REQUEST=${{ inputs.aws-sdk-kotlin-pr }}
             echo Identified this as an external pull request build: $PULL_REQUEST
           else 
