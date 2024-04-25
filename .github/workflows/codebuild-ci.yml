@@ -88,11 +88,13 @@ jobs:
         run: | 
           REPOSITORY=$(echo ${{ github.repository }} | cut -d '/' -f 2)
           PULL_REQUEST=""
-
-          if [ -n ${{ github.event.number }} ]; then # TODO: TEST THIS ASSUMPTION
+          INTERNAL=${{ github.event.number }}
+          EXTERNAL=${{ inputs.aws-sdk-kotlin-pr }}
+          
+          if [ -n "$INTERNAL" ]; then
             PULL_REQUEST=${{ github.event.number }}
             echo Identified this an internal pull request: $PULL_REQUEST
-          elif [ -n ${{ inputs.aws-sdk-kotlin-pr }} ]; then # TODO: TEST THIS ASSUMPTION
+          elif [ -n "EXTERNAL" ]; then
             PULL_REQUEST=${{ inputs.aws-sdk-kotlin-pr }}
             echo Identified this as an external pull request build: $PULL_REQUEST
           else 
@@ -118,13 +120,14 @@ jobs:
           fi
       - name: Collect Artifact Size Metrics
         run: |
-          REPOSITORY=$(echo ${{ github.repository }} | cut -d '/' -f 2)
           PULL_REQUEST=""
-          
-          if [ -n ${{ github.event.number }} ]; then # TODO: TEST THIS ASSUMPTION
+          INTERNAL=${{ github.event.number }}
+          EXTERNAL=${{ inputs.aws-sdk-kotlin-pr }}
+        
+          if [ -n "$INTERNAL" ]; then
             PULL_REQUEST=${{ github.event.number }}
             echo Identified this an internal pull request: $PULL_REQUEST
-          elif [ -n ${{ inputs.aws-sdk-kotlin-pr }} ]; then # TODO: TEST THIS ASSUMPTION
+          elif [ -n "EXTERNAL" ]; then
             PULL_REQUEST=${{ inputs.aws-sdk-kotlin-pr }}
             echo Identified this as an external pull request build: $PULL_REQUEST
           else 
