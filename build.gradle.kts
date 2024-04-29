@@ -30,6 +30,7 @@ artifactSizeMetrics {
     closurePrefixes = setOf(":services")
     significantChangeThresholdPercentage = 5.0
     projectRepositoryName = "aws-sdk-kotlin"
+}
 
 val testJavaVersion = typedProp<String>("test.java.version")?.let {
     JavaLanguageVersion.of(it)
