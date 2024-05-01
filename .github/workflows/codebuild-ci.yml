@@ -60,7 +60,7 @@ jobs:
             const getComments = 
               `query { 
                 repository(owner:"${context.repo.owner}", name:"${context.repo.repo}"){
-                  pullRequest(number: ${context.issue.number ?? inputs.aws-sdk-kotlin-pr}) {
+                  pullRequest(number: ${context.issue.number ?? process.env.SDK_PR}) {
                     id
                     comments(last:100) {
                       nodes {
