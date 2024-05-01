@@ -38,7 +38,7 @@ concurrency:
 
 jobs:
   service-check-batch-and-artifact-size-metrics:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Verify PRs are not running malicious code
