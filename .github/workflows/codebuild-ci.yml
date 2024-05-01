@@ -92,9 +92,6 @@ jobs:
               )
             await Promise.all(mutations)
 
-            const fs = require('node:fs')
-            const comment = fs.readFileSync('build/reports/metrics/artifact-analysis.md', 'utf8')
-
             const writeComment = 
               `mutation {
                 addComment(input:{body:"test", subjectId:"${response.repository.pullRequest.id}"}){
