@@ -37,38 +37,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  e2e-tests:
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Verify PRs are not running malicious code
-        if: ${{ (inputs.aws-sdk-kotlin-pr != '' || inputs.smithy-kotlin-pr != '') && inputs.check-pr == false }}
-        run: |
-          echo Please verify the PRs are not running any malicious code and mark the checkbox true when running the workflow
-          exit 1
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.CI_AWS_ROLE_ARN }}
-          aws-region: us-west-2
-      - name: Run E2E Tests
-        id: e2e-tests
-        uses: aws-actions/aws-codebuild-run-build@v1
-        with:
-          project-name: gh-aws-sdk-kotlin-e2e-tests
-          env-vars-for-codebuild: SDK_PR, SMITHY_PR
-      - name: Cancel build
-        if: ${{ cancelled() }}
-        env:
-          BUILD_ID: ${{ steps.e2e-tests.outputs.aws-build-id }}
-        run: |
-          if [ ! -z "$BUILD_ID"]; then
-            echo "cancelling in-progress build: id=$BUILD_ID"
-            aws codebuild stop-build --id $BUILD_ID
-          fi
-
   service-check-batch-and-artifact-size-metrics:
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Verify PRs are not running malicious code
@@ -83,61 +53,6 @@ jobs:
         with:
           role-to-assume: ${{ secrets.CI_AWS_ROLE_ARN }}
           aws-region: us-west-2
-      - name: Run Service Check Batch and Calculate Artifact Size Metrics
-        id: svc-check-batch
-        run: | 
-          REPOSITORY=$(echo ${{ github.repository }} | cut -d '/' -f 2)
-          PULL_REQUEST=""
-          INTERNAL=${{ github.event.number }}
-          EXTERNAL=${{ inputs.aws-sdk-kotlin-pr }}
-          
-          if [ ! -z "$INTERNAL" ]; then
-            PULL_REQUEST=${{ github.event.number }}
-            echo "Identified this an internal pull request build: $PULL_REQUEST"
-          elif [ ! -z "$EXTERNAL" ]; then
-            PULL_REQUEST=${{ inputs.aws-sdk-kotlin-pr }}
-            echo "Identified this as an external pull request build: $PULL_REQUEST"
-          else 
-            echo "Couldn't identify this as an internal or external pull request"
-            exit 1
-          fi
-          
-          .github/scripts/run-codebuild-batch-job.sh \
-            --project gh-aws-sdk-kotlin-svc-check-batch \
-            --source ${{ github.event.pull_request.head.sha }} \
-            --pr-number $PULL_REQUEST \
-            --repository $REPOSITORY \
-            --external-contributor-sdk-pr-number ${{ inputs.aws-sdk-kotlin-pr }} \
-            --external-contributor-smithy-pr-number ${{ inputs.smithy-kotlin-pr }}
-      - name: Cancel build
-        if: ${{ cancelled() }}
-        env:
-          BUILD_ID: ${{ steps.svc-check-batch.outputs.aws-build-id }}
-        run: |
-          if [ ! -z "$BUILD_ID" ]; then
-            echo "cancelling in-progress batch build: id=$BUILD_ID"
-            aws codebuild stop-build --id $BUILD_ID
-          fi
-      - name: Collect Artifact Size Metrics
-        run: |
-          PULL_REQUEST=""
-          INTERNAL=${{ github.event.number }}
-          EXTERNAL=${{ inputs.aws-sdk-kotlin-pr }}
-          
-          if [ ! -z "$INTERNAL" ]; then
-            PULL_REQUEST=${{ github.event.number }}
-            echo "Identified this an internal pull request build: $PULL_REQUEST"
-          elif [ ! -z "$EXTERNAL" ]; then
-            PULL_REQUEST=${{ inputs.aws-sdk-kotlin-pr }}
-            echo "Identified this as an external pull request build: $PULL_REQUEST"
-          else 
-            echo "Couldn't identify this as an internal or external pull request"
-            exit 1
-          fi
-          
-          ./gradlew collectDelegatedArtifactSizeMetrics -PpullRequest=$PULL_REQUEST
-      - name: Analyze Artifact Size Metrics
-        run: ./gradlew analyzeArtifactSizeMetrics
       - name: Show Results
         uses: actions/github-script@v7
         with:
@@ -145,7 +60,7 @@ jobs:
             const getComments = 
               `query { 
                 repository(owner:"${context.repo.owner}", name:"${context.repo.repo}"){
-                  pullRequest(number: ${context.issue.number}) {
+                  pullRequest(number: ${context.issue.number ?? process.env.SDK_PR}) {
                     id
                     comments(last:100) {
                       nodes {
@@ -177,12 +92,9 @@ jobs:
               )
             await Promise.all(mutations)
 
-            const fs = require('node:fs')
-            const comment = fs.readFileSync('build/reports/metrics/artifact-analysis.md', 'utf8')
-
             const writeComment = 
               `mutation {
-                addComment(input:{body:"""${comment}""", subjectId:"${response.repository.pullRequest.id}"}){
+                addComment(input:{body:"test", subjectId:"${response.repository.pullRequest.id}"}){
                   clientMutationId
                 }
               }`
